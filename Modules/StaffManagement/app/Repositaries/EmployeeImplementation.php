@@ -3,18 +3,16 @@
 namespace Modules\StaffManagement\app\Repositaries;
 
 use Modules\StaffManagement\app\Models\Employee;
-// use Modules\LabourManagement\app\Models\Job_labour;
 use Carbon\Carbon;
 
 
 class EmployeeImplementation implements EmployeeInterface
 {
 
-    // Labour Store
     public function store($data)
     {
 
-        // Create New Labour
+        // Create New Employee
         $employee = new Employee();
 
         $employee->employee_ref_id = $data['employee_ref_id'];
@@ -37,13 +35,17 @@ class EmployeeImplementation implements EmployeeInterface
 
         $employee->yearly_increasing_bonus = $data['yearly_increasing_bonus'];
 
-        $employee->yearly_net_salary = $data['yearly_net_salary'];
+        // calculate yealry net salary
+        $yearly_net_salary = ($data['net_salary'] * 12) + $data['yearly_increasing_bonus'];
+
+        $employee->yearly_net_salary = $yearly_net_salary;
 
         $employee->save();
 
         return $employee;
     }
 
+    // Update Employee
     public function update($data, $id)
     {
         $employee = Employee::find($id['id']);
@@ -58,31 +60,61 @@ class EmployeeImplementation implements EmployeeInterface
 
         $employee->yearly_increasing_bonus = $data['yearly_increasing_bonus'];
 
-        $employee->yearly_net_salary = $data['yearly_net_salary'];
+        // calculate yealry net salary
+        $yearly_net_salary = ($data['net_salary'] * 12) + $data['yearly_increasing_bonus'];
+
+        $employee->yearly_net_salary = $yearly_net_salary;
 
         $employee->save();
 
         return $employee;
     }
 
-    // Get All Labours / Filter Labours Data
+    // Get All Employees / Filter Employees Data
     public function getEmployees($data)
     {
         if (!empty($data['search_data'])) {
 
             $searchData = $data['search_data'];
-            $allemployees  = Employee::select('employee_ref_id', 'name', 'email', 'contact', 'designation', 'status')
+            $allemployees  = Employee::select('id', 'employee_ref_id', 'name', 'email', 'contact', 'designation', 'status', 'monthly_salary_package', 'monthly_tax_value', 'net_salary', 'yearly_increasing_bonus', 'yearly_net_salary')
                 ->where('contact', 'LIKE', '%' . $searchData . '%')
                 ->get();
         } else {
-            $allemployees  = Employee::select('employee_ref_id', 'name', 'email', 'contact', 'designation', 'status')
+            $allemployees  = Employee::select('id', 'employee_ref_id', 'name', 'email', 'contact', 'designation', 'status', 'monthly_salary_package', 'monthly_tax_value', 'net_salary', 'yearly_increasing_bonus', 'yearly_net_salary')
                 ->get();
         }
         return $allemployees;
     }
 
-    // Labour Delete
-    public function deleteLabour($id)
+    // Get All Information with salary details / Filter Employees Data
+    public function getAllEmployees($data)
+    {
+        if (!empty($data['search_data'])) {
+
+            $searchData = $data['search_data'];
+            $allemployeesInfo  = Employee::select('employee_ref_id', 'name', 'email', 'contact', 'designation', 'monthly_salary_package', 'monthly_tax_value', 'net_salary', 'yearly_increasing_bonus', 'yearly_net_salary')
+                ->where('contact', 'LIKE', '%' . $searchData . '%')
+                ->orWhere('employee_ref_id', 'LIKE', '%' . $searchData . '%')
+                ->orWhere('name', 'LIKE', '%' . $searchData . '%')
+                ->orWhere('email', 'LIKE', '%' . $searchData . '%')
+                ->orWhere('designation', 'LIKE', '%' . $searchData . '%')
+                ->get();
+        } else {
+            $allemployeesInfo  = Employee::select('employee_ref_id', 'name', 'email', 'contact', 'designation', 'monthly_salary_package', 'monthly_tax_value', 'net_salary', 'yearly_increasing_bonus', 'yearly_net_salary')
+                ->get();
+        }
+        return $allemployeesInfo;
+    }
+
+    // Get Total Count - Employees
+    public function getTotEmployees()
+    {
+        $totemployees = Employee::count();
+        return $totemployees;
+    }
+
+    // Employees Delete
+    public function deleteEmployee($id)
     {
     }
 }

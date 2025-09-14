@@ -8,6 +8,7 @@ use Modules\StaffManagement\app\Repositaries\EmployeeInterface;
 use Modules\StaffManagement\app\Http\Requests\AddEmployeeRequest;
 use Modules\StaffManagement\app\Http\Requests\UpdateEmployeeRequest;
 use Modules\StaffManagement\app\Http\Requests\SearchEmployeeRequest;
+use Modules\StaffManagement\app\Http\Requests\SearchInfoRequest;
 use Illuminate\Http\Request;
 use Exception;
 
@@ -22,7 +23,7 @@ class StaffManagementController extends Controller
     }
 
 
-    // Store New Labour
+    // Store New Employee
     public function store(AddEmployeeRequest $request)
     {
 
@@ -41,7 +42,7 @@ class StaffManagementController extends Controller
 
 
 
-    // Update Labour Details
+    // Update Employee Details
     public function update(UpdateEmployeeRequest $request, Employee $id)
     {
         // data validation from the request class
@@ -58,12 +59,41 @@ class StaffManagementController extends Controller
     }
 
 
-    // Get All Employees / Filter Labours
+    // Get All Employees / Filter Employees
     public function index(SearchEmployeeRequest $request)
     {
         $validateddata = $request->validated();
         try {
             $response = $this->interface->getEmployees($validateddata);
+            return response()->json(
+                ['data' => $response],
+                200
+            );
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Get All Information / Filter Employees
+    public function getallinfo(SearchInfoRequest $request)
+    {
+        $validateddata = $request->validated();
+        try {
+            $response = $this->interface->getAllEmployees($validateddata);
+            return response()->json(
+                ['data' => $response],
+                200
+            );
+        } catch (Exception $e) {
+            return response()->json(['error' => $e->getMessage()], 500);
+        }
+    }
+
+    // Get total count -- employees
+    public function totalemployees()
+    {
+        try {
+            $response = $this->interface->getTotEmployees();
             return response()->json(
                 ['data' => $response],
                 200

@@ -20,10 +20,21 @@ Route::prefix('employee')->group(function () {
         'update',
     ]);
 
-
-    // ---- Get All Employees ------
+    // ---- Get Employees ------
     Route::post('getemployees', [
         StaffManagementController::class,
         'index',
+    ]);
+
+    // ---- Get All Employees ------
+    Route::post('getallemployees', [
+        StaffManagementController::class,
+        'getallinfo',
+    ]);
+
+    // ---- Get Total Employees ------
+    Route::get('totemployees', [
+        StaffManagementController::class,
+        'totalemployees',
     ]);
 });

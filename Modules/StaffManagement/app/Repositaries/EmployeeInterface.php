@@ -6,16 +6,22 @@ namespace Modules\StaffManagement\app\Repositaries;
 interface EmployeeInterface
 {
 
-    // labour store
+    // Employee store
     public function store($data);
 
-    // labour update
+    // Employee update
     public function update($data, $id);
 
-    // labour all
+    // Employees all
     public function getEmployees($data);
 
-    // labour delete
-    public function deleteLabour($id);
+    // Employees all Info
+    public function getAllEmployees($data);
+
+    // Total Employees
+    public function getTotEmployees();
+
+    // Employee delete
+    public function deleteEmployee($id);
 
 }
