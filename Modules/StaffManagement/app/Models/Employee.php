@@ -10,6 +10,7 @@ class Employee extends Model
 
     protected $primaryKey = 'id';
 
+
     protected $fillable = [
         'employee_ref_id',
         'name',

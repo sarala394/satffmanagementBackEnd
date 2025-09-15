@@ -10,7 +10,7 @@ interface EmployeeInterface
     public function store($data);
 
     // Employee update
-    public function update($data, $id);
+    public function updateEmployee($data, $id);
 
     // Employees all
     public function getEmployees($data);

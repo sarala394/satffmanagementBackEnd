@@ -45,10 +45,11 @@ class StaffManagementController extends Controller
     // Update Employee Details
     public function update(UpdateEmployeeRequest $request, Employee $id)
     {
+
         // data validation from the request class
         $validateddata = $request->validated();
         try {
-            $response = $this->interface->update($validateddata, $id);
+            $response = $this->interface->updateEmployee($validateddata, $id);
             return response()->json(
                 ['data' => $response],
                 200
