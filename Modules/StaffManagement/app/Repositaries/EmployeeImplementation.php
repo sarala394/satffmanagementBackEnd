@@ -115,8 +115,14 @@ class EmployeeImplementation implements EmployeeInterface
         return $totemployees;
     }
 
+
     // Employees Delete
     public function deleteEmployee($id)
     {
+        $labour = Employee::findOrFail($id);
+        $labour->delete();
+
+        $message = "SuccssFully Deleted";
+        return $message;
     }
 }

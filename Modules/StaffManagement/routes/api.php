@@ -37,4 +37,10 @@ Route::prefix('employee')->group(function () {
         StaffManagementController::class,
         'totalemployees',
     ]);
+
+    // ---- Delete Emploeyee ------
+    Route::delete('deleteemployee/{id}',[
+        StaffManagementController::class,
+            'destroy',
+        ]);
 });
