@@ -24,12 +24,12 @@ class UpdateEmployeeRequest extends FormRequest
     public function rules()
     {
         return [
-            'contact' => "nullable|string",
-            'monthly_salary_package' =>  "nullable|numeric",
-            'monthly_tax_value' =>  "nullable|numeric",
-            'net_salary' =>  "nullable|numeric",
-            'yearly_increasing_bonus' =>  "nullable|numeric",
-            'yearly_net_salary' =>  "nullable|numeric",
+            'contact' => "string",
+            'monthly_salary_package' =>  "numeric",
+            'monthly_tax_value' =>  "numeric",
+            'net_salary' =>  "numeric",
+            'yearly_increasing_bonus' =>  "numeric",
+            'yearly_net_salary' =>  "",
         ];
     }
 }

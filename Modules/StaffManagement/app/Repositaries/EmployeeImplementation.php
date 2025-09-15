@@ -48,6 +48,8 @@ class EmployeeImplementation implements EmployeeInterface
     // Update Employee
     public function update($data, $id)
     {
+        dd($data['contact']);
+        
         $employee = Employee::find($id['id']);
 
         $employee->contact = $data['contact'];
